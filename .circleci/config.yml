@@ -15,7 +15,7 @@ jobs:
     # You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # A list of available CircleCI Docker Convenience Images are available here: https://circleci.com/developer/images/image/cimg/node
     docker:
-      - image: cimg/node:16.10
+      - image: electronuserland/builder:wine
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     steps:
@@ -29,6 +29,8 @@ jobs:
       - run:
           name: Run tests
           command: npm run build-win
+      - store_artifacts:
+          path: /root/project/build
 
 workflows:
   # Below is the definition of your workflow.
