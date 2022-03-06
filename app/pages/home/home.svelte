@@ -3,29 +3,64 @@
 	 * Home HTML
 	 * =====================
 	 *
-	 * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+	 * @contributors: Bastian Huber
 	 *
 	 * @license: MIT License
 	 *
 	 */
-	import Menu from "@components/common/menu/menu.svelte";
 	import Footer from "@components/common/footer/footer.svelte";
 	import { translate } from "@app/translations/translate";
+
+	import { DataTable, Toolbar, ToolbarContent, ToolbarSearch } from "carbon-components-svelte";
+	import { onDestroy, onMount } from "svelte";
+	import type { DataTableRow } from "carbon-components-svelte/types/DataTable/DataTable.svelte";
+
+	let timer = null;
+	let services: DataTableRow[] = [];
+	let needle = "";
+	$: filteredServices = services.filter((x) => JSON.stringify(x).toLocaleLowerCase().indexOf(needle) >= 0);
+
+	function searchInput(e) {
+		needle = e.target.value.toLowerCase();
+	}
+
+	onMount(() => {
+		timer = setInterval(async () => {
+			services = await window.electron.doThing();
+		}, 1000);
+	});
+
+	onDestroy(() => {
+		clearInterval(timer);
+	});
 </script>
 
-<Menu />
+<DataTable
+	size="short"
+	sortable
+	title="MDNS Services"
+	description="HTTP,HTTPS,OCA,OCASEC Services"
+	expandable
+	headers={[
+		{ key: "name", value: "Name" },
+		{ key: "protocol", value: "Protocol" },
+		{ key: "port", value: "Port" },
+		{ key: "host", value: "Host" },
+	]}
+	rows={filteredServices}
+>
+	<svelte:fragment slot="expanded-row" let:row>
+		<pre>
+      {JSON.stringify(row, null, 2)}
+    </pre>
+	</svelte:fragment>
 
-<div id="container">
-	<section class="hero is-medium is-primary is-bold">
-		<div class="hero-body">
-			<div class="container">
-				<h1 class="title">{translate("hello_world")}</h1>
-				<h2 class="subtitle">{translate("app_name")}</h2>
-			</div>
-		</div>
-	</section>
-	<div class="content has-text-centered">app/pages/home.svelte</div>
-</div>
+	<Toolbar>
+		<ToolbarContent>
+			<ToolbarSearch on:input={searchInput} />
+		</ToolbarContent>
+	</Toolbar>
+</DataTable>
 
 <Footer />
 

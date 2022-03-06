@@ -3,17 +3,14 @@
 	 * Error404 HTML
 	 * =====================
 	 *
-	 * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+	 * @contributors: Bastian Huber
 	 *
 	 * @license: MIT License
 	 *
 	 */
-	import Menu from "@components/common/menu/menu.svelte";
 	import Footer from "@components/common/footer/footer.svelte";
 	import { translate } from "@app/translations/translate";
 </script>
-
-<Menu />
 
 <div id="container">
 	<section class="hero is-medium is-primary is-bold">

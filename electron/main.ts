@@ -4,12 +4,13 @@
  * =====================
  * Create electron window
  *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+ * @contributors: Bastian Huber
  *
  * @license: MIT License
  *
  */
-import { app, BrowserWindow } from "electron";
+import bonjour = require("bonjour");
+import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 const config = require("../app/configs/config");
 
@@ -29,9 +30,28 @@ function createWindow() {
 	} else {
 		mainWindow.loadFile(path.join(__dirname, "../../index.html"));
 	}
+	mainWindow.setMenu(null);
 }
 
+const bj = bonjour();
+const services = new Map<string, bonjour.RemoteService>();
+// bj.publish({ name: "My Web Server", type: "http", port: 3000 });
+// bj.publish({ name: "My Web Server oca", type: "oca", port: 3000 });
+
+setInterval(() => {
+	["http", "https", "oca", "ocasec", "ocp", "ocasec"].forEach((element) => {
+		bj.find({ type: element }, function (service) {
+			service["id"] = service.fqdn;
+			service["lastFound"] = new Date();
+			services.set(service.fqdn, service);
+		});
+	});
+}, 5000);
+
 app.on("ready", () => {
+	ipcMain.handle("myipccall", () => {
+		return Array.from(services.values());
+	});
 	createWindow();
 
 	app.on("activate", function () {

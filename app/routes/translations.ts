@@ -3,7 +3,7 @@
  * =====================
  * Switch translations
  *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+ * @contributors: Bastian Huber
  *
  * @license: MIT License
  *
