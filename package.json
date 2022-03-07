@@ -12,14 +12,13 @@
 	"license-docs": "CC BY 4.0",
 	"license-translations": "CC BY 4.0",
 	"license-images": "CC BY-NC 4.0",
-	"homepage": "https://github.com/basdl-boilerplate/bonjour-browser",
-	"docs": "https://github.com/WeeeTeam/projectx-docs",
+	"homepage": "https://github.com/basdl/bonjour-browser",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/basdl-boilerplate/bonjour-browser.git"
+		"url": "https://github.com/basdl/bonjour-browser.git"
 	},
 	"bugs": {
-		"url": "https://github.com/basdl-boilerplate/bonjour-browser/issues"
+		"url": "https://github.com/basdl/bonjour-browser/issues"
 	},
 	"engines": {
 		"node": ">=14.0.0"
