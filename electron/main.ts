@@ -38,15 +38,20 @@ const services = new Map<string, bonjour.RemoteService>();
 // bj.publish({ name: "My Web Server", type: "http", port: 3000 });
 // bj.publish({ name: "My Web Server oca", type: "oca", port: 3000 });
 
-setInterval(() => {
-	["http", "https", "oca", "ocasec", "ocp", "ocasec"].forEach((element) => {
+function query() {
+	["http", "https", "oca", "ocasec", "ocp", "wpn", "ssh", "rpanel"].forEach((element) => {
 		bj.find({ type: element }, function (service) {
 			service["id"] = service.fqdn;
 			service["lastFound"] = new Date();
 			services.set(service.fqdn, service);
 		});
 	});
+}
+
+setInterval(() => {
+	query();
 }, 5000);
+query();
 
 app.on("ready", () => {
 	ipcMain.handle("myipccall", () => {
