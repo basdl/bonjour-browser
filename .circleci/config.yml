@@ -32,8 +32,6 @@ jobs:
       - store_artifacts:
           path: /root/project/build
   publish-github-release:
-    requires:
-      - build-and-test
     docker:
       - image: cibuilds/github:0.10
     steps:
