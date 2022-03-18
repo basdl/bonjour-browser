@@ -32,9 +32,9 @@ jobs:
       - store_artifacts:
           path: /root/project/build
       - save_workspace:
-          root: .     # relative path to our working directory
-          paths:      # file globs which will be persisted to the workspace
-           - /root/project/build/*.exe
+          root: .
+          paths: 
+            - /root/project/build/*.exe
   publish-github-release:
     docker:
       - image: cibuilds/github:0.10
