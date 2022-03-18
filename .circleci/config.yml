@@ -40,7 +40,7 @@ jobs:
       - run:
           name: "Publish Release on GitHub"
           command: |
-            VERSION=$(node getversion.js)
+            VERSION=0.0.1
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
 workflows:
   # Below is the definition of your workflow.
@@ -51,3 +51,10 @@ workflows:
     jobs:
       - build-and-test
       - publish-github-release
+        requires:
+          - build-and-test
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            ignore: /.*/
