@@ -50,7 +50,7 @@ workflows:
   sample:
     jobs:
       - build-and-test
-      - publish-github-release
+      - publish-github-release:
         requires:
           - build-and-test
         filters:
