@@ -34,7 +34,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: 
-            - /root/project/build/*.exe
+            - build/*.exe
   publish-github-release:
     docker:
       - image: cibuilds/github:0.10
