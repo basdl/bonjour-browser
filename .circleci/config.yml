@@ -31,7 +31,7 @@ jobs:
           command: npm run build-win
       - store_artifacts:
           path: /root/project/build
-      - save_workspace:
+      - persist_to_workspace:
           root: .
           paths: 
             - /root/project/build/*.exe
