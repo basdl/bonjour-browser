@@ -26,5 +26,5 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 contextBridge.exposeInMainWorld("electron", {
-	doThing: () => ipcRenderer.invoke("myipccall"),
+	getServices: () => ipcRenderer.invoke("getServices"),
 });

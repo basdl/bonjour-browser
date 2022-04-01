@@ -13,6 +13,7 @@ import bonjour = require("bonjour");
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 const config = require("../app/configs/config");
+import { networkInterfaces } from "os";
 
 function createWindow() {
 	const mainWindow = new BrowserWindow({
@@ -33,29 +34,9 @@ function createWindow() {
 	mainWindow.setMenu(null);
 }
 
-const bj = bonjour();
-const services = new Map<string, bonjour.RemoteService>();
-// bj.publish({ name: "My Web Server", type: "http", port: 3000 });
-// bj.publish({ name: "My Web Server oca", type: "oca", port: 3000 });
-
-function query() {
-	["http", "https", "oca", "ocasec", "ocp", "wpn", "ssh", "rpanel"].forEach((element) => {
-		bj.find({ type: element }, function (service) {
-			service["id"] = service.fqdn;
-			service["lastFound"] = new Date();
-			services.set(service.fqdn, service);
-		});
-	});
-}
-
-setInterval(() => {
-	query();
-}, 5000);
-query();
-
 app.on("ready", () => {
-	ipcMain.handle("myipccall", () => {
-		return Array.from(services.values());
+	ipcMain.handle("getServices", () => {
+		return Array.from(browser.services.values());
 	});
 	createWindow();
 
@@ -71,3 +52,58 @@ app.on("window-all-closed", () => {
 		app.quit();
 	}
 });
+
+class ServiceBrowser {
+	bj: bonjour.Bonjour[] = new Array<bonjour.Bonjour>();
+	services = new Map<string, bonjour.RemoteService>();
+
+	allInterfaces(): string[] {
+		const result = [];
+		const networks = networkInterfaces();
+		const names = Object.keys(networks);
+
+		for (let i = 0; i < names.length; i++) {
+			const net = networks[names[i]];
+			for (let j = 0; j < net.length; j++) {
+				const iface = net[j];
+				if (iface.family === "IPv4" && !iface.internal) {
+					result.push(iface.address);
+				}
+			}
+		}
+
+		if (result.length == 0) {
+			result.push("127.0.0.1");
+		}
+
+		return result;
+	}
+
+	constructor() {
+		this.allInterfaces().forEach((iface) => {
+			const b = bonjour({ interface: iface });
+			b.publish({ name: "My Web Server", type: "http", port: 3000 });
+			this.bj.push(b);
+		});
+
+		setInterval(() => {
+			this.query();
+		}, 5000);
+		this.query();
+	}
+
+	serviceFound(service: bonjour.RemoteService) {
+		service["id"] = service.fqdn;
+		this.services.set(service.fqdn, service);
+	}
+
+	query() {
+		this.bj.forEach((browser) => {
+			browser.find({}, (service: bonjour.RemoteService) => {
+				this.serviceFound(service);
+			});
+		});
+	}
+}
+
+const browser = new ServiceBrowser();

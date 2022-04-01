@@ -2,7 +2,7 @@
 	"name": "@basdl/bonjour-browser",
 	"displayName": "Bonjour Browser",
 	"description": "A simple desktop app to browser Bonjour services",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"main": "dist/electron/electron/main.js",
 	"publishConfig": {
 		"access": "public"
@@ -34,6 +34,7 @@
 		"release": " ts-node scripts/rmdist.ts && npm run build:client && npm run build:desktop && electron-builder --dir",
 		"build-mac": " ts-node scripts/rmdist.ts && npm run build:client && npm run build:desktop && electron-builder --dir --mac dmg",
 		"build-win": " ts-node scripts/rmdist.ts && npm run build:client && npm run build:desktop && electron-builder --dir --win portable",
+		"build-win-nsis": " ts-node scripts/rmdist.ts && npm run build:client && npm run build:desktop && electron-builder --dir --win nsis",
 		"build-win-32bit": " ts-node scripts/rmdist.ts && npm run build:client && npm run build:desktop && electron-builder --dir --win portable --ia32",
 		"build-lnx": " ts-node scripts/rmdist.ts && npm run build:client && npm run build:desktop && electron-builder --dir --linux appImage deb rpm",
 		"test": "jest app  --passWithNoTests",

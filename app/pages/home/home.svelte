@@ -26,7 +26,7 @@
 
 	onMount(() => {
 		timer = setInterval(async () => {
-			services = await window.electron.doThing();
+			services = await window.electron.getServices();
 		}, 1000);
 	});
 
@@ -38,8 +38,8 @@
 <DataTable
 	size="short"
 	sortable
-	title="MDNS Services"
-	description="HTTP,HTTPS,OCA,OCASEC Services"
+	title="Bonjour/ MDNS Services"
+	description="proudly browsed by javascript only"
 	expandable
 	headers={[
 		{ key: "name", value: "Name" },
