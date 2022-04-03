@@ -87,6 +87,9 @@ class ServiceBrowser {
 			this.bj.push(b);
 		});
 
+		const b = require("bonjour")();
+		this.bj.push(b);
+
 		setInterval(() => {
 			this.query();
 		}, 5000);
