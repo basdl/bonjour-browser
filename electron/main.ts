@@ -101,8 +101,8 @@ class ServiceBrowser {
 
 	query() {
 		this.bj.forEach((browser) => {
-			const b = require("bonjour")();
-			b.find({}, (service: bonjour.RemoteService) => {
+			const bonjourInstance = require("bonjour")();
+			bonjourInstance.find({}, (service: bonjour.RemoteService) => {
 				this.serviceFound(service);
 			});
 		});
