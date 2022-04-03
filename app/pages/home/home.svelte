@@ -43,7 +43,7 @@
 	expandable
 	headers={[
 		{ key: "name", value: "Name" },
-		{ key: "protocol", value: "Protocol" },
+		{ key: "fqdn", value: "FQDN" },
 		{ key: "port", value: "Port" },
 		{ key: "host", value: "Host" },
 	]}

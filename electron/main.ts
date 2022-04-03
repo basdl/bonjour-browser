@@ -83,8 +83,7 @@ class ServiceBrowser {
 
 	constructor() {
 		this.allInterfaces().forEach((iface) => {
-			const b = bonjour({ interface: iface });
-			b.publish({ name: "My Web Server", type: "http", port: 3000 });
+			const b = require("bonjour")({ interface: iface });
 			this.bj.push(b);
 		});
 
@@ -101,8 +100,7 @@ class ServiceBrowser {
 
 	query() {
 		this.bj.forEach((browser) => {
-			const bonjourInstance = require("bonjour")();
-			bonjourInstance.find({}, (service: bonjour.RemoteService) => {
+			browser.find({}, (service: bonjour.RemoteService) => {
 				this.serviceFound(service);
 			});
 		});
