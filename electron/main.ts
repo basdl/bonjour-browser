@@ -15,6 +15,8 @@ import * as path from "path";
 const config = require("../app/configs/config");
 import { networkInterfaces } from "os";
 
+const bonjourService = bonjour({ reuseAddr: true });
+
 function createWindow() {
 	const mainWindow = new BrowserWindow({
 		width: 1024,
@@ -99,7 +101,8 @@ class ServiceBrowser {
 
 	query() {
 		this.bj.forEach((browser) => {
-			browser.find({}, (service: bonjour.RemoteService) => {
+			const b = require("bonjour")();
+			b.find({}, (service: bonjour.RemoteService) => {
 				this.serviceFound(service);
 			});
 		});
