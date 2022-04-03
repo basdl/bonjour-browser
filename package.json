@@ -2,14 +2,12 @@
 	"name": "@basdl/bonjour-browser",
 	"displayName": "Bonjour Browser",
 	"author": "Bastian Huber <basdl@github.com>",
-	"email": "basdl@github.com",
 	"description": "A simple desktop app to browser Bonjour services",
 	"version": "0.0.1",
 	"main": "dist/electron/electron/main.js",
 	"publishConfig": {
 		"access": "public"
 	},
-	"author": "Bastian Huber",
 	"license": "MIT",
 	"license-docs": "CC BY 4.0",
 	"license-translations": "CC BY 4.0",
