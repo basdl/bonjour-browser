@@ -8,14 +8,14 @@ jobs:
           matrix:
             os: [macos-latest, ubuntu-latest, windows-latest]
         steps:
-            - env:
-                GH_TOKEN: ${{ secrets.GH_TOKEN }}
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
               with:
                   node-version: "17.x"
                   registry-url: "https://registry.npmjs.org"
             - run: npm ci
+            - env:
+                GH_TOKEN: ${{ secrets.GH_TOKEN }}
             - run: npm run build-mac
               if: contains(matrix.os, 'macos')
             - run: npm run build-lnx
