@@ -14,14 +14,18 @@ jobs:
                   node-version: "17.x"
                   registry-url: "https://registry.npmjs.org"
             - run: npm ci
-            - env:
-                GH_TOKEN: ${{ secrets.GH_TOKEN }}
             - run: npm run build-mac
               if: contains(matrix.os, 'macos')
+              env:
+                GH_TOKEN: ${{ secrets.GH_TOKEN }}
             - run: npm run build-lnx
               if: contains(matrix.os, 'ubuntu')
+              env:
+                GH_TOKEN: ${{ secrets.GH_TOKEN }}
             - run: npm run build-win-nsis
               if: contains(matrix.os, 'windows')
+              env:
+                GH_TOKEN: ${{ secrets.GH_TOKEN }}
             - uses: actions/upload-artifact@v3
               with:
                 name: Data
