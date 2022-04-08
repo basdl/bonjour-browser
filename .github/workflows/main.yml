@@ -14,7 +14,7 @@ jobs:
                   node-version: "17.x"
                   registry-url: "https://registry.npmjs.org"
             - run: npm ci
-            - run: npm run build-mac
+            - run: GH_TOKEN=${{ secrets.GH_TOKEN }} npm run build-mac
               if: contains(matrix.os, 'macos')
               env:
                 GH_TOKEN: ${{ secrets.GH_TOKEN }}
