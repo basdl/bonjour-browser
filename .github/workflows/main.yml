@@ -3,6 +3,8 @@ on: push
 jobs:
     build:
         runs-on: ${{ matrix.os }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
         strategy:
           matrix:
@@ -14,7 +16,9 @@ jobs:
                   node-version: "17.x"
                   registry-url: "https://registry.npmjs.org"
             - run: npm ci
-            - run: GH_TOKEN=${{ secrets.GH_TOKEN }} npm run build-mac
+            - run: |
+                export GH_TOKEN=${{ secrets.GH_TOKEN }}
+                npm run build-mac
               if: contains(matrix.os, 'macos')
               env:
                 GH_TOKEN: ${{ secrets.GH_TOKEN }}
