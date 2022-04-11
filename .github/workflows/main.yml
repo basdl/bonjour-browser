@@ -5,6 +5,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          DEBUG: electron-builder
 
         strategy:
           matrix:
