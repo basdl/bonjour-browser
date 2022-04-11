@@ -4,7 +4,7 @@ jobs:
     build:
         runs-on: ${{ matrix.os }}
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEBUG: electron-builder
 
         strategy:
@@ -18,20 +18,18 @@ jobs:
                   registry-url: "https://registry.npmjs.org"
             - run: npm ci
             - run: |
-                export DEBUG=electron-builder
-                export GH_TOKEN=${{ secrets.GH_TOKEN }}
-                npm run build-mac
+                GH_TOKEN=${{ secrets.GITHUB_TOKEN }} npm run build-mac
               if: contains(matrix.os, 'macos')
               env:
-                GH_TOKEN: ${{ secrets.GH_TOKEN }}
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - run: npm run build-lnx
               if: contains(matrix.os, 'ubuntu')
               env:
-                GH_TOKEN: ${{ secrets.GH_TOKEN }}
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - run: npm run build-win-nsis
               if: contains(matrix.os, 'windows')
               env:
-                GH_TOKEN: ${{ secrets.GH_TOKEN }}
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - uses: actions/upload-artifact@v3
               with:
                 name: Data
