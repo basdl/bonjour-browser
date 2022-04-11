@@ -17,6 +17,7 @@ jobs:
                   registry-url: "https://registry.npmjs.org"
             - run: npm ci
             - run: |
+                export DEBUG=electron-builder
                 export GH_TOKEN=${{ secrets.GH_TOKEN }}
                 npm run build-mac
               if: contains(matrix.os, 'macos')
